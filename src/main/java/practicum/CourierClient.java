@@ -6,7 +6,7 @@ import practicum.Courier;
 import static io.restassured.RestAssured.given;
 
 public class CourierClient {
-    private static final String URL_Create = "/api/v1/courier";
+    private static final String URL_CREATE = "/api/v1/courier";
     private static final String URL_LOGIN = "/api/v1/courier/login";
     private static final String URL_DELETE = "/api/v1/courier/:id";
 
@@ -20,7 +20,7 @@ public class CourierClient {
                 .and()
                 .body(courier)
                 .when()
-                .post(URL_Create);
+                .post(URL_CREATE);
     }
 
     public Response loginCourier(CourierCreds courierCreds){

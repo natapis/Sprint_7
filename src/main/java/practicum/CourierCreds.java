@@ -8,6 +8,7 @@ public class CourierCreds {
         this.password = password;
     }
 
+
     public static CourierCreds credsForm (Courier courier){
         return new CourierCreds(courier.getLogin(), courier.getPassword());
     }
