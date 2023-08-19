@@ -36,9 +36,8 @@ public class CourierClient {
         return given()
                 .header("Content-type","application/json")
                 .body(id)
-                .and()
-                .pathParam(id, new Object())
+                .queryParam("id", id)
                 .when()
-                .delete(URL_DELETE+"?id=");
+                .delete(URL_DELETE);
     }
 }

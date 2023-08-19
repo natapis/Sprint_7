@@ -84,14 +84,17 @@ public class CourierCreateTest {
         createResponse.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи")).and().statusCode(400);
 //        id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
     }
-    /*
+/*
     @After
     public void tearDown(){
+    если ид курьера не пустое
         CourierClient courierClient = new CourierClient();
         Response deleteResponse = courierClient.deleteCourier(id_Courier);
         Assert.assertEquals("Курьер не удален", 200, deleteResponse.statusCode());
     }
 
-     */
+ */
+
+
 
 }
