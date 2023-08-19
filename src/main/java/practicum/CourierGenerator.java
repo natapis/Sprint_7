@@ -24,4 +24,16 @@ public class CourierGenerator {
                 .withLogin(randomString(8))
                 .withPassword(randomString(10));
     }
+
+    public static Courier withoutPassword(){
+        return new Courier()
+                .withLogin(randomString(8))
+                .withFirstName(randomString(12));
+    }
+    public static Courier withoutLogin(){
+        return new Courier()
+                .withPassword(randomString(10))
+                .withFirstName(randomString(12));
+    }
+
 }

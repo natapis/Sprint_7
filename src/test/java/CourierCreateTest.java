@@ -57,6 +57,33 @@ public class CourierCreateTest {
         createResponse.then().assertThat().body("ok", equalTo(true)).and().statusCode(201);
         id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
     }
+
+    @Test
+    public void createCourierWithoutPassword(){
+        CourierClient courierClient = new CourierClient();
+        Courier courier = CourierGenerator.withoutPassword();
+        Response createResponse = courierClient.createCourier(courier);
+        Assert.assertEquals("Неверный статус ответа для курьера без пароля", 400, createResponse.statusCode());
+//        Courier courierLogin = new Courier("TestSprint7","test2");
+//        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
+//        Assert.assertEquals("Логин не осуществляется", 200, loginResponse.statusCode());
+        createResponse.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи")).and().statusCode(400);
+//        id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
+    }
+
+    @Test
+
+    public void creteCourierWithoutLogin(){
+        CourierClient courierClient = new CourierClient();
+        Courier courier = CourierGenerator.withoutLogin();
+        Response createResponse = courierClient.createCourier(courier);
+        Assert.assertEquals("Неверный статус ответа для курьера без логина", 400, createResponse.statusCode());
+//        Courier courierLogin = new Courier("TestSprint7","test2");
+//        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
+//        Assert.assertEquals("Логин не осуществляется", 200, loginResponse.statusCode());
+        createResponse.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи")).and().statusCode(400);
+//        id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
+    }
     /*
     @After
     public void tearDown(){
