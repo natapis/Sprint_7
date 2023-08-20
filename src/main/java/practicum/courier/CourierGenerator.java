@@ -1,36 +1,36 @@
 package practicum.courier;
 
-import practicum.courier.Courier;
 
 import static practicum.RandomString.randomString;
 
 public class CourierGenerator {
-    public static Courier randomCourier(){
+    public static Courier randomCourier() {
         return new Courier()
                 .withLogin(randomString(8))
                 .withPassword(randomString(12))
                 .withFirstName(randomString(10));
     }
 
-    public static Courier doubleCourier(String login){
+    public static Courier doubleCourier(String login) {
         return new Courier()
                 .withLogin(login)
                 .withPassword(randomString(12))
                 .withFirstName(randomString(10));
     }
 
-    public static Courier requiredFields(){
+    public static Courier requiredFields() {
         return new Courier()
                 .withLogin(randomString(8))
                 .withPassword(randomString(10));
     }
 
-    public static Courier withoutPassword(){
+    public static Courier withoutPassword() {
         return new Courier()
                 .withLogin(randomString(8))
                 .withFirstName(randomString(12));
     }
-    public static Courier withoutLogin(){
+
+    public static Courier withoutLogin() {
         return new Courier()
                 .withPassword(randomString(10))
                 .withFirstName(randomString(12));
