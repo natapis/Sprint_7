@@ -14,36 +14,38 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
-    private final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
+    private final String BASE_URL = "http://qa-scooter.praktikum-services.ru";
     private final String[] color;
     private final int expected;
 
-    public CreateOrderTest(String[] color, int expected){
+    public CreateOrderTest(String[] color, int expected) {
         this.color = color;
         this.expected = expected;
     }
+
     @Before
-    public void setUp(){
+    public void setUp() {
         RestAssured.baseURI = BASE_URL;
     }
+
     @Parameterized.Parameters(name = "Создание заказа на самокат цвета {0} - {1}")
-    public static Object[][] getColor(){
+    public static Object[][] getColor() {
         return new Object[][]{
-                {"BLACK",201},
-        {"BLACK", "GRAY",201},
-        {null, 201}
+                {new String[]{"BLACK"}, 201},
+                {new String[]{"BLACK", "GRAY"}, 201},
+                {new String[]{}, 201}
         };
     }
 
     @Test
     @DisplayName("Создание заказа")
-    public void createOrder(){
-        Order order = OrderGenerate.generateOrder(color);
+    public void createOrder() {
         OrderMetods orderMetods = new OrderMetods();
+        Order order = OrderGenerate.generateOrder(color);
         Response createResponse = orderMetods.createOrder(order);
         createResponse.then().assertThat().body("track", notNullValue()).and().statusCode(201);
         int actual = createResponse.statusCode();
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals("Не совпадают коды", expected, actual);
     }
 
 }
