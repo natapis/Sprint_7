@@ -1,6 +1,4 @@
-package practicum;
-
-import java.util.ArrayList;
+package practicum.order;
 
 public class Order {
     private String firstName;

@@ -1,4 +1,4 @@
-package practicum;
+package practicum.courier;
 
 public class Courier {
     private String login;

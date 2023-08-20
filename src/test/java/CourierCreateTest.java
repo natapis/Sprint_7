@@ -1,10 +1,10 @@
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import practicum.*;
+import practicum.courier.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,6 +19,7 @@ public class CourierCreateTest {
         RestAssured.baseURI = BASE_URL;
     }
     @Test
+    @DisplayName("Создание курьера со всеми параметрами")
     public void createFullDateCourierTest(){
         CourierClient courierClient = new CourierClient();
         Courier courier = CourierGenerator.randomCourier();
@@ -34,6 +35,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера с уже существующим логином")
     public void createDoubleCourier(){
         CourierClient courierClient = new CourierClient();
         Courier courier = CourierGenerator.randomCourier();
@@ -46,6 +48,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера только с обязательными полями")
     public void createCourierWithRequiredFields(){
         CourierClient courierClient = new CourierClient();
         Courier courier = CourierGenerator.requiredFields();
@@ -59,6 +62,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера без пароля")
     public void createCourierWithoutPassword(){
         CourierClient courierClient = new CourierClient();
         Courier courier = CourierGenerator.withoutPassword();
@@ -72,6 +76,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера без логина")
 
     public void creteCourierWithoutLogin(){
         CourierClient courierClient = new CourierClient();

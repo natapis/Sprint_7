@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Assert;
@@ -5,10 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import practicum.*;
-
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
+import practicum.order.Order;
+import practicum.order.OrderGenerate;
+import practicum.order.OrderMetods;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 
@@ -26,7 +26,7 @@ public class CreateOrderTest {
     public void setUp(){
         RestAssured.baseURI = BASE_URL;
     }
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Создание заказа на самокат цвета {0} - {1}")
     public static Object[][] getColor(){
         return new Object[][]{
                 {"BLACK",201},
@@ -36,6 +36,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Создание заказа")
     public void createOrder(){
         Order order = OrderGenerate.generateOrder(color);
         OrderMetods orderMetods = new OrderMetods();

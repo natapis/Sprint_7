@@ -1,7 +1,6 @@
-package practicum;
+package practicum.courier;
 
 import io.restassured.response.Response;
-import practicum.Courier;
 
 import static io.restassured.RestAssured.given;
 

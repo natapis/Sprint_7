@@ -1,8 +1,9 @@
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import practicum.*;
+import practicum.courier.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -22,6 +23,7 @@ public class CourierLoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация курьера")
     public void loginCourier(){
         Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         loginResponse.then().assertThat().body("id", notNullValue()).and().statusCode(200);
@@ -29,6 +31,7 @@ public class CourierLoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с неправильным паролем")
     public void loginCourierWrongPassword(){
         String login = courier.getLogin();
         String passwordWrong = courier.getPassword() + 't';
@@ -39,6 +42,7 @@ public class CourierLoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация без пароля")
     public void loginCourierWithoutPassword(){
         String login = courier.getLogin();
         CourierCreds creds = new CourierCreds(login, null);
@@ -47,6 +51,7 @@ public class CourierLoginTest {
         id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
     }
     @Test
+    @DisplayName("Авторизация без логина")
     public void loginCourierWithoutLogin(){
         String password = courier.getPassword();
         CourierCreds creds = new CourierCreds(null, password);
@@ -57,6 +62,7 @@ public class CourierLoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с неправильным логином")
     public void loginCourierWrongLogin(){
         String loginWrong = courier.getLogin()+'t';
         String password = courier.getPassword();
@@ -67,6 +73,7 @@ public class CourierLoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с несуществующим логином")
     public void loginCourierNotExist(){
         String loginNotExist = randomString(8);
         String password = courier.getPassword();

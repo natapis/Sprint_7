@@ -1,6 +1,7 @@
-package practicum;
+package practicum.order;
 
 import io.restassured.response.Response;
+import practicum.order.Order;
 
 import static io.restassured.RestAssured.given;
 

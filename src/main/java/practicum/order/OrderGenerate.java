@@ -1,6 +1,6 @@
-package practicum;
+package practicum.order;
 
-import java.util.ArrayList;
+import practicum.order.Order;
 
 public class OrderGenerate {
     public OrderGenerate(){

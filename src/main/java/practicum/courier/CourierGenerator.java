@@ -1,6 +1,6 @@
-package practicum;
+package practicum.courier;
 
-import practicum.Courier;
+import practicum.courier.Courier;
 
 import static practicum.RandomString.randomString;
 
