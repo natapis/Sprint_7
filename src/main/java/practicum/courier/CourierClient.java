@@ -3,11 +3,9 @@ package practicum.courier;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
+import static practicum.constants.Api.*;
 
 public class CourierClient {
-    private static final String URL_CREATE = "/api/v1/courier";
-    private static final String URL_LOGIN = "/api/v1/courier/login";
-    private static final String URL_DELETE = "/api/v1/courier/{:id}";
 
     public CourierClient() {
 
