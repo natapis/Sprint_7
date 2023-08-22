@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
+import static practicum.constants.Api.BASE_URL;
+import static practicum.constants.Api.URL_CREATE_ORDER;
 
 public class OrderListTest {
-    private final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
-    private final String URL_ORDER_LIST = "/api/v1/orders";
 
     @Before
     public void setUp() {
@@ -20,7 +20,7 @@ public class OrderListTest {
     @DisplayName("Получение списка заказов без параметров")
     public void getOrderList() {
         Response getResponse = given()
-                .get(URL_ORDER_LIST);
+                .get(URL_CREATE_ORDER);
         getResponse.then().body("orders", notNullValue()).and().statusCode(200);
     }
 }

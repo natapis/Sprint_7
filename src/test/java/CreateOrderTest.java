@@ -11,10 +11,10 @@ import practicum.order.OrderGenerate;
 import practicum.order.OrderMetods;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static practicum.constants.Api.BASE_URL;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
-    private final String BASE_URL = "http://qa-scooter.praktikum-services.ru";
     private final String[] color;
     private final int expected;
 

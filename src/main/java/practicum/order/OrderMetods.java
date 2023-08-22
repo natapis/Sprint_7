@@ -5,9 +5,9 @@ import io.restassured.response.Response;
 
 
 import static io.restassured.RestAssured.given;
+import static practicum.constants.Api.URL_CREATE_ORDER;
 
 public class OrderMetods {
-    private final static String URL_CREATE_ORDER = "/api/v1/orders";
 
     public OrderMetods() {
 
