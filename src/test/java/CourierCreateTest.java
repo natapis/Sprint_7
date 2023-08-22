@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class CourierCreateTest {
     private final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
     private String idCourier;
+    private Response loginResponse;
 
     @Before
     public void setUp() {
@@ -28,8 +29,7 @@ public class CourierCreateTest {
         Response createResponse = courierClient.createCourier(courier);
         createResponse.then().assertThat().body("ok", equalTo(true));
         Assert.assertEquals("Неверный статус ответа", 201, createResponse.statusCode());
-        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
-        idCourier = loginResponse.body().as(LoginAnswer.class).getId();
+        loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         Assert.assertEquals("Логин не осуществляется", 200, loginResponse.statusCode());
     }
 
@@ -40,8 +40,7 @@ public class CourierCreateTest {
         Courier courier = CourierGenerator.randomCourier();
         String login_courier_one = courier.getLogin();
         courierClient.createCourier(courier);
-        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
-        idCourier = loginResponse.body().as(LoginAnswer.class).getId();
+        loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         Assert.assertEquals("Логин не осуществляется", 200, loginResponse.statusCode());
         Courier courier_two = CourierGenerator.doubleCourier(login_courier_one);
         Response createResponse = courierClient.createCourier(courier_two);
@@ -56,8 +55,7 @@ public class CourierCreateTest {
         Response createResponse = courierClient.createCourier(courier);
         Assert.assertEquals("Неверный статус ответа", 201, createResponse.statusCode());
         createResponse.then().assertThat().body("ok", equalTo(true));
-        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
-        idCourier = loginResponse.body().as(LoginAnswer.class).getId();
+        loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         Assert.assertEquals("Логин не осуществляется", 200, loginResponse.statusCode());
     }
 
@@ -69,10 +67,7 @@ public class CourierCreateTest {
         Response createResponse = courierClient.createCourier(courier);
         Assert.assertEquals("Неверный статус ответа для курьера без пароля", 400, createResponse.statusCode());
         createResponse.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
-        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
-        if (loginResponse.statusCode() == 200) {
-            idCourier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
+        loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         Assert.assertEquals("Не совпадают коды статусов", 400, loginResponse.statusCode());
     }
 
@@ -84,16 +79,14 @@ public class CourierCreateTest {
         Response createResponse = courierClient.createCourier(courier);
         Assert.assertEquals("Неверный статус ответа для курьера без логина", 400, createResponse.statusCode());
         createResponse.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи")).and().statusCode(400);
-        Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
-        if (loginResponse.statusCode() == 200) {
-            idCourier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
+        loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         Assert.assertEquals("Не совпадают коды статусов", 400, loginResponse.statusCode());
     }
 
     @After
     public void tearDown() {
-        if (!(idCourier.isEmpty())) {
+        if (loginResponse.statusCode() == 200) {
+            idCourier = loginResponse.body().as(LoginAnswer.class).getId();
             CourierClient courierClient = new CourierClient();
             Response deleteResponse = courierClient.deleteCourier(idCourier);
             Assert.assertEquals("Курьер не удален", 200, deleteResponse.statusCode());
