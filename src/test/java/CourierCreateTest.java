@@ -19,6 +19,7 @@ public class CourierCreateTest {
     public void setUp() {
         RestAssured.baseURI = BASE_URL;
         idCourier = "";
+        loginResponse = null;
     }
 
     @Test
