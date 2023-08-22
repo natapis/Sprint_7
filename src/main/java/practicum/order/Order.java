@@ -4,7 +4,7 @@ public class Order {
     private String firstName;
     private String lastName;
     private String address;
-    private String metroStation;
+    private int metroStation;
     private String phone;
     private int rentTime;
     private String deliveryDate;
@@ -30,7 +30,7 @@ public class Order {
         return this;
     }
 
-    public Order withMetroStation(String metroStation) {
+    public Order withMetroStation(int metroStation) {
         this.metroStation = metroStation;
         return this;
     }
