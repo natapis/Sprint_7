@@ -10,9 +10,9 @@ import practicum.courier.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static practicum.RandomString.randomString;
+import static practicum.constants.Api.BASE_URL;
 
 public class CourierLoginTest {
-    private final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
     private String idCourier;
     private CourierClient courierClient = new CourierClient();
 
