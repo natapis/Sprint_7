@@ -1,39 +1,45 @@
 package practicum.courier;
 
 
-import static practicum.RandomString.randomString;
+import com.github.javafaker.Faker;
+
 
 public class CourierGenerator {
     public static Courier randomCourier() {
+        Faker faker = new Faker();
         return new Courier()
-                .withLogin(randomString(8))
-                .withPassword(randomString(12))
-                .withFirstName(randomString(10));
+                .withLogin(faker.funnyName().name())
+                .withPassword(faker.gameOfThrones().dragon())
+                .withFirstName(faker.name().firstName());
     }
 
     public static Courier doubleCourier(String login) {
+        Faker faker = new Faker();
         return new Courier()
                 .withLogin(login)
-                .withPassword(randomString(12))
-                .withFirstName(randomString(10));
+                .withPassword(faker.gameOfThrones().dragon())
+                .withFirstName(faker.name().firstName());
     }
 
     public static Courier requiredFields() {
+        Faker faker = new Faker();
         return new Courier()
-                .withLogin(randomString(8))
-                .withPassword(randomString(10));
+                .withLogin(faker.funnyName().name())
+                .withPassword(faker.gameOfThrones().dragon());
     }
 
     public static Courier withoutPassword() {
+        Faker faker = new Faker();
         return new Courier()
-                .withLogin(randomString(8))
-                .withFirstName(randomString(12));
+                .withLogin(faker.funnyName().name())
+                .withFirstName(faker.name().firstName());
     }
 
     public static Courier withoutLogin() {
+        Faker faker = new Faker();
         return new Courier()
-                .withPassword(randomString(10))
-                .withFirstName(randomString(12));
+                .withPassword(faker.gameOfThrones().dragon())
+                .withFirstName(faker.name().firstName());
     }
 
 }

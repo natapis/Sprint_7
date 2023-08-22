@@ -1,3 +1,4 @@
+import com.github.javafaker.Faker;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -9,7 +10,6 @@ import practicum.courier.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static practicum.RandomString.randomString;
 import static practicum.constants.Api.BASE_URL;
 
 public class CourierLoginTest {
@@ -73,7 +73,8 @@ public class CourierLoginTest {
     @Test
     @DisplayName("Авторизация с несуществующим логином")
     public void loginCourierNotExist() {
-        String loginNotExist = randomString(8);
+        Faker faker = new Faker();
+        String loginNotExist = faker.funnyName().name();
         String password = courier.getPassword();
         CourierCreds creds = new CourierCreds(loginNotExist, password);
         Response loginResponse = courierClient.loginCourier(creds);
