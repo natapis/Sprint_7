@@ -13,7 +13,7 @@ import static practicum.RandomString.randomString;
 
 public class CourierLoginTest {
     private final String BASE_URL = "http://qa-scooter.praktikum-services.ru/";
-    private String id_Courier;
+    private String idCourier;
     private CourierClient courierClient = new CourierClient();
 
     private Courier courier = CourierGenerator.randomCourier();
@@ -22,7 +22,7 @@ public class CourierLoginTest {
     public void setUp() {
         RestAssured.baseURI = BASE_URL;
         courierClient.createCourier(courier);
-        id_Courier = "";
+        idCourier = "";
     }
 
     @Test
@@ -30,9 +30,6 @@ public class CourierLoginTest {
     public void loginCourier() {
         Response loginResponse = courierClient.loginCourier(CourierCreds.credsForm(courier));
         loginResponse.then().assertThat().body("id", notNullValue()).and().statusCode(200);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
     @Test
@@ -43,9 +40,6 @@ public class CourierLoginTest {
         CourierCreds creds = new CourierCreds(login, passwordWrong);
         Response loginResponse = courierClient.loginCourier(creds);
         loginResponse.then().assertThat().body("message", equalTo("Учетная запись не найдена")).and().statusCode(404);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
     @Test
@@ -55,9 +49,6 @@ public class CourierLoginTest {
         CourierCreds creds = new CourierCreds(login, null);
         Response loginResponse = courierClient.loginCourier(creds);
         loginResponse.then().assertThat().body("message", equalTo("Недостаточно данных для входа")).and().statusCode(400);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
     @Test
@@ -67,9 +58,6 @@ public class CourierLoginTest {
         CourierCreds creds = new CourierCreds(null, password);
         Response loginResponse = courierClient.loginCourier(creds);
         loginResponse.then().assertThat().body("message", equalTo("Недостаточно данных для входа")).and().statusCode(400);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
     @Test
@@ -80,9 +68,6 @@ public class CourierLoginTest {
         CourierCreds creds = new CourierCreds(loginWrong, password);
         Response loginResponse = courierClient.loginCourier(creds);
         loginResponse.then().assertThat().body("message", equalTo("Учетная запись не найдена")).and().statusCode(404);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
     @Test
@@ -93,17 +78,15 @@ public class CourierLoginTest {
         CourierCreds creds = new CourierCreds(loginNotExist, password);
         Response loginResponse = courierClient.loginCourier(creds);
         loginResponse.then().assertThat().body("message", equalTo("Учетная запись не найдена")).and().statusCode(404);
-        if (loginResponse.statusCode() == 200) {
-            id_Courier = loginResponse.body().as(LoginAnswer.class).getId();
-        }
     }
 
 
     @After
     public void tearDown() {
-        if (!(id_Courier.isEmpty())) {
-            CourierClient courierClient = new CourierClient();
-            Response deleteResponse = courierClient.deleteCourier(id_Courier);
+        Response loginResponseOld = courierClient.loginCourier(CourierCreds.credsForm(courier));
+        if (loginResponseOld.statusCode() == 200) {
+            idCourier = loginResponseOld.body().as(LoginAnswer.class).getId();
+            Response deleteResponse = courierClient.deleteCourier(idCourier);
             Assert.assertEquals("Курьер не удален", 200, deleteResponse.statusCode());
         }
     }
